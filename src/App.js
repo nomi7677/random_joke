@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+function App (){
+
+  const [joke, setJoke] = useState (" ");
+  
+  const getJoke = () => {
+  
+  Axios.get("http://api.icndb.com/jokes/random").then(
+  
+  (response) => {
+  console.log(response);
+  setJoke ("Random Id is" +" "+ response.data.value.id +" and "+ "Joke for that Id is:" +" " + response.data.value.joke)
+  }
   );
+  };
+  
+  return(
+  <div>
+  <button style={{width:150,backgroundColor:'#99004d',marginTop:350, marginLeft:250, justifyContent: "center"}}  onClick={getJoke}>Get a Joke </button>
+  {joke}
+  
+  </div>
+  )
 }
+  
 
 export default App;
+
+
